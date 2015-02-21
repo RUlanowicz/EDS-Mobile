@@ -4,6 +4,10 @@ android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
 
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+
     defaultConfig {
         applicationId "eds.com.eds_mobile"
         minSdkVersion 15
@@ -26,4 +30,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'com.google.android.gms:play-services-maps:6.5.87'
     compile 'com.jakewharton:butterknife:6.1.0'
+    compile 'com.getbase:floatingactionbutton:1.8.0'
+    compile 'com.squareup.picasso:picasso:2.5.0'
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_primary">#A0CF5B</color>
+    <color name="color_secondary">#566D51</color>
+    <color name="logo_blue">#27327D</color>
+    <color name="logo_blue_pressed">#2A3580</color>
+    <color name="black_semi_transparent">#B2000000</color>
+    <color name="background">#e5e5e5</color>
+    <color name="half_black">#808080</color>
+    <color name="white">#fafafa</color>
+    <color name="white_pressed">#f1f1f1</color>
+</resources>
