@@ -7,6 +7,7 @@ import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 
 /**
  * Created by ulanowicz on 2/21/15.
@@ -14,7 +15,6 @@ import io.realm.RealmObject;
 
 public class Image extends RealmObject{
     private String url;
-    private File imageFile;
 
     public String getUrl() {
         return url;
@@ -22,13 +22,5 @@ public class Image extends RealmObject{
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public File getImageFile() {
-        return imageFile;
-    }
-
-    public void setImageFile(File imageFile) {
-        this.imageFile = imageFile;
     }
 }
