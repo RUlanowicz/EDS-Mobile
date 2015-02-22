@@ -16,8 +16,12 @@ public class Report extends RealmObject{
     private RealmList<Image> images;
     private String tag;
     private String description;
-    private float lat;
-    private float lon;
+    private String reportType;
+    private double lat;
+    private double lon;
+    private String emailAddress;
+    private String userName;
+    private String zipCode;
 
     public String getReporter() {
         return reporter;
@@ -59,19 +63,51 @@ public class Report extends RealmObject{
         this.description = description;
     }
 
-    public float getLat() {
+    public double getLat() {
         return lat;
     }
 
-    public void setLat(float lat) {
+    public void setLat(double lat) {
         this.lat = lat;
     }
 
-    public float getLon() {
+    public double getLon() {
         return lon;
     }
 
-    public void setLon(float lon) {
+    public void setLon(double lon) {
         this.lon = lon;
+    }
+
+    public String getReportType() {
+        return reportType;
+    }
+
+    public void setReportType(String reportType) {
+        this.reportType = reportType;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 }

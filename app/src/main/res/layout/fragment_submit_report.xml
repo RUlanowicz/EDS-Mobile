@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight=".4"
-        android:scaleType="centerInside"
+        android:scaleType="fitCenter"
         android:contentDescription="First Report Picture" />
 
     <TextView
@@ -27,29 +27,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:inputType="textAutoCorrect" />
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-
-        <!--<fragment-->
-            <!--android:name="com.google.android.gms.maps.SupportMapFragment"-->
-            <!--android:id="@+id/map"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--map:cameraZoom="13"-->
-            <!--map:mapType="normal"-->
-            <!--map:liteMode="true"/>-->
-
-        <TextView
-            android:id="@+id/report_type_info"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        </LinearLayout>
+        android:lines="5"
+        android:gravity="top|start"
+        android:inputType="textMultiLine"
+        android:scrollHorizontally="false"
+        android:textColor="#000" />
 
     <Button
         style="?android:attr/buttonBarButtonStyle"
