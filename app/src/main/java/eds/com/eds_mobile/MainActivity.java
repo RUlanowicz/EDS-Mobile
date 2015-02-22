@@ -138,9 +138,9 @@ public class MainActivity extends ActionBarActivity implements CreateReportFragm
 
         if (requestCode == REQUEST_IMAGE_CAPTURE_FIRST && resultCode == RESULT_OK) {
             if (currentPhoto.exists()) {
-                Bitmap thumbnail = BitmapFactory.decodeFile(currentPhoto.getAbsolutePath());
-                thumbnail = Bitmap.createScaledBitmap(thumbnail,2096,2096,false);
-                SubmitReportFragment fragment = SubmitReportFragment.newInstance(thumbnail,currentDescription,currentLat,currentLon);
+//                Bitmap thumbnail = BitmapFactory.decodeFile(currentPhoto.getAbsolutePath());
+//                thumbnail = Bitmap.createScaledBitmap(thumbnail,2096,2096,false);
+                SubmitReportFragment fragment = SubmitReportFragment.newInstance(currentPhoto,currentDescription,currentLat,currentLon);
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.replace(R.id.fragment_container,fragment).commit();
