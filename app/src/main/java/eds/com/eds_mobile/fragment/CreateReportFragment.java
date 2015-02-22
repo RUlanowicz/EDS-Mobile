@@ -44,6 +44,7 @@ public class CreateReportFragment extends Fragment implements View.OnClickListen
     @InjectView(R.id.action_e) FloatingActionButton actionE;
     GoogleMap mMap;
     Marker mMarker;
+    boolean updateAgain;
 
     private OnFragmentInteractionListener mListener;
 
@@ -61,6 +62,7 @@ public class CreateReportFragment extends Fragment implements View.OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        updateAgain = true;
     }
 
     @Override
@@ -78,13 +80,16 @@ public class CreateReportFragment extends Fragment implements View.OnClickListen
         final GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
-                LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
-                if (mMarker != null) {
-                    mMarker.remove();
-                }
-                mMarker = mMap.addMarker(new MarkerOptions().position(loc).draggable(true));
-                if(mMap != null){
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 12));
+                if (updateAgain) {
+                    LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+                    if (mMarker != null) {
+                        mMarker.remove();
+                    }
+                    mMarker = mMap.addMarker(new MarkerOptions().position(loc).draggable(true));
+                    if (mMap != null) {
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 12));
+                    }
+                    updateAgain = false;
                 }
             }
         };
@@ -101,6 +106,14 @@ public class CreateReportFragment extends Fragment implements View.OnClickListen
                 mMap.setOnMyLocationChangeListener(myLocationChangeListener);
 
                 mMap.getUiSettings().setMapToolbarEnabled(false);
+
+                mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+                    @Override
+                    public boolean onMyLocationButtonClick() {
+                        updateAgain = true;
+                        return false;
+                    }
+                });
 
                 Realm realm = Realm.getInstance(getActivity());
                 RealmResults<Report> reports = realm.allObjects(Report.class);

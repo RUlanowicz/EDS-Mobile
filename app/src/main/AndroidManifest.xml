@@ -33,6 +33,15 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyBLP1Sf2bGSr_IbE8Ms76uWqRM_pwo_C3k" />
+
+        <activity
+            android:name=".SubmitActivity"
+            android:label="@string/title_activity_submit"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="eds.com.eds_mobile.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

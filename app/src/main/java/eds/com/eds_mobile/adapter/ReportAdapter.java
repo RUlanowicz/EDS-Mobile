@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import eds.com.eds_mobile.R;
@@ -34,12 +36,15 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
+        Report report = mListings.get(position);
+        holder.title.setText(report.getReportType());
+        holder.coordinates.setText(report.getLat()+", "+report.getLon());
+        Picasso.with(mContext).load(report.getImages().get(0).getAbsolutePath()).into(holder.image);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mListings.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -87,7 +87,7 @@ public class SubmitReportFragment extends Fragment {
     @OnClick(R.id.save_button)
     public void onButtonPressed() {
         if (mListener != null) {
-            mListener.onSubmitReport(descriptionText.getText().toString(), latitude, longitude);
+            mListener.onSubmitReport(descriptionText.getText().toString(), latitude, longitude, mFile.getAbsolutePath());
         }
     }
 
@@ -109,7 +109,7 @@ public class SubmitReportFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        public void onSubmitReport(String description, double lat, double lon);
+        public void onSubmitReport(String description, double lat, double lon, String filePath);
     }
 
 }

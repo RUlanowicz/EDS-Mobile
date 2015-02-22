@@ -12,6 +12,7 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -31,18 +32,22 @@ import java.util.Locale;
 import java.util.Random;
 
 import butterknife.ButterKnife;
+import eds.com.eds_mobile.adapter.TabsPagerAdapter;
 import eds.com.eds_mobile.fragment.CreateReportFragment;
 import eds.com.eds_mobile.fragment.SubmitReportFragment;
 import eds.com.eds_mobile.model.Report;
+import eds.com.eds_mobile.widget.SlidingTabLayout;
 import io.realm.Realm;
 
 
-public class MainActivity extends ActionBarActivity implements CreateReportFragment.OnFragmentInteractionListener, SubmitReportFragment.OnFragmentInteractionListener{
+public class MainActivity extends ActionBarActivity implements CreateReportFragment.OnFragmentInteractionListener {
 
     GoogleMap mMap;
     private final int USER_RECOVERABLE_ERROR = 0;
     static final int REQUEST_IMAGE_CAPTURE_FIRST = 1;
     static final int REQUEST_IMAGE_CAPTURE_SUBSEQUENT = 2;
+    private ViewPager mViewPager;
+    private SlidingTabLayout mSlidingTabLayout;
 
     File currentPhoto;
     private String currentDescription;
@@ -89,9 +94,14 @@ public class MainActivity extends ActionBarActivity implements CreateReportFragm
                 });
                 builder.create().show();
             }
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container,CreateReportFragment.newInstance());
-            fragmentTransaction.commit();
+//            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//            fragmentTransaction.replace(R.id.fragment_container,CreateReportFragment.newInstance());
+//            fragmentTransaction.commit();
+
+            mViewPager = (ViewPager) findViewById(R.id.viewpager);
+            mViewPager.setAdapter(new TabsPagerAdapter(getSupportFragmentManager()));
+            mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+            mSlidingTabLayout.setViewPager(mViewPager);
         }
         else if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
             GooglePlayServicesUtil.getErrorDialog(resultCode,this,USER_RECOVERABLE_ERROR).show();
@@ -138,12 +148,15 @@ public class MainActivity extends ActionBarActivity implements CreateReportFragm
 
         if (requestCode == REQUEST_IMAGE_CAPTURE_FIRST && resultCode == RESULT_OK) {
             if (currentPhoto.exists()) {
-//                Bitmap thumbnail = BitmapFactory.decodeFile(currentPhoto.getAbsolutePath());
-//                thumbnail = Bitmap.createScaledBitmap(thumbnail,2096,2096,false);
-                SubmitReportFragment fragment = SubmitReportFragment.newInstance(currentPhoto,currentDescription,currentLat,currentLon);
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.replace(R.id.fragment_container,fragment).commit();
+                Intent intent = new Intent(this,SubmitActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("filePath",currentPhoto.getAbsolutePath());
+                bundle.putString("description",currentDescription);
+                bundle.putDouble("lat",currentLat);
+                bundle.putDouble("lon",currentLon);
+                intent.putExtras(bundle);
+                startActivity(intent);
+//                fragmentTransaction.replace(R.id.fragment_container,fragment).commit();
             }
         }
     }
@@ -183,25 +196,6 @@ public class MainActivity extends ActionBarActivity implements CreateReportFragm
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE_FIRST);
             }
         }
-    }
-
-    @Override
-    public void onSubmitReport(String currentDescription, double currentLat, double currentLon) {
-        Realm realm = Realm.getInstance(this);
-        realm.beginTransaction();
-        Report report = realm.createObject(Report.class);
-        report.setReportType(this.currentDescription);
-        report.setDescription(currentDescription);
-        report.setLat(this.currentLat);
-        report.setLon(this.currentLon);
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        report.setUserName(preferences.getString("name",null));
-        report.setZipCode(preferences.getString("zip",null));
-        report.setEmailAddress(preferences.getString("email",null));
-        realm.commitTransaction();
-        //TODO upload image to S3/put URL into object and save
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container,new CreateReportFragment()).commit();
     }
 
     public static String random() {
