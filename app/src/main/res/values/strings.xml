@@ -8,4 +8,7 @@
     <string name="title_activity_submit">SubmitActivity</string>
     <string name="save">Save</string>
     <string name="description">Description</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

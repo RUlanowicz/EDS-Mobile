@@ -15,6 +15,7 @@ import io.realm.annotations.Ignore;
 
 public class Image extends RealmObject{
     private String url;
+    private String absolutePath;
 
     public String getUrl() {
         return url;
@@ -22,5 +23,13 @@ public class Image extends RealmObject{
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getAbsolutePath() {
+        return absolutePath;
+    }
+
+    public void setAbsolutePath(String absolutePath) {
+        this.absolutePath = absolutePath;
     }
 }
